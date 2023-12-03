@@ -3,8 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "net.h"
 #include "server.h"
+#include "thread.h"
 
 #define BACKLOG 10
 #define PORT "10000"
@@ -25,23 +27,18 @@ int server_init()
 	puts("starting listener...");
 
 	while (1) {
+		lock = 0;
 		client = accept(listener, NULL, NULL);
 
 		puts("new connection");
-		recv(client, buffer, BUFFERSIZE, 0);
+		recv(client, buffer, sizeof buffer, 0);
 
-		printf("msg: %s\n", buffer);
+		printf("Message received: %s\n", buffer);
 
 		close(client);
 		close(listener);
 		exit(0);
 	}
 
-	return 0;
-}
-
-int main()
-{
-	server_init();
 	return 0;
 }
