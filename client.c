@@ -4,14 +4,16 @@
 #include <unistd.h>
 #include "net.h"
 #include "thread.h"
+#include "client.h"
 
 #define MESSAGESIZE 4096
 
-int client_init()
+void *client_init(struct target *target_host)
 {
 
 	while (lock)
 		;
+
 	int connector;
 	char message[MESSAGESIZE] = "Hello, me.";
 
@@ -21,7 +23,7 @@ int client_init()
 	// to the same port the listener is on
 	// client socket is binding and sending a message to the listener,
 	// which is on the same exact port as the client socket
-	connector = get_client_socket("127.0.0.1", "10000");
+	connector = get_client_socket(target_host->hostname, target_host->port);
 	send(connector, message, sizeof message, 0);
 	puts("Message sent.");
 

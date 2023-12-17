@@ -1,6 +1,11 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-int client_init();
+void *client_init();
+
+struct target {
+	char *hostname;
+	char *port;
+};
 
 #endif
