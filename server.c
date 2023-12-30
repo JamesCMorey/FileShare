@@ -24,9 +24,6 @@ void *server_init()
 		return -1;
 	}
 
-	puts("starting listener...");
-	lock = 0;
-
 	client = accept(listener, NULL, NULL);
 
 	puts("new connection");

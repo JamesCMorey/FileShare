@@ -4,9 +4,10 @@
 #include "thread.h"
 #include "server.h"
 #include "client.h"
+#include "display.h"
 
 
-int main ()
+int main()
 {
 	pthread_t server_t, client_t;
 	struct target *homeserver = malloc(sizeof(struct target));
@@ -18,8 +19,9 @@ int main ()
 	pthread_create(&client_t, NULL, client_init, homeserver);
 
 	// do not use &pthread_t for pthread_join
-	pthread_join(server_t, NULL);
 	pthread_join(client_t, NULL);
+	pthread_join(server_t, NULL);
+	menu();
 
 	return 0;
 }

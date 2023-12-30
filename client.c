@@ -12,9 +12,6 @@
 void *client_init(struct target *target_host)
 {
 
-	while (lock)
-		;
-
 	int connector;
 	char message[MESSAGESIZE] = "Hello, me.";
 
@@ -29,6 +26,6 @@ void *client_init(struct target *target_host)
 	puts("Message sent.");
 
 	close(connector);
-	pthread_exit(0);
+	return 0;
 }
 
