@@ -25,19 +25,17 @@ void *server_init()
 	}
 
 	puts("starting listener...");
-	while (1) {
-		lock = 0;
-		client = accept(listener, NULL, NULL);
+	lock = 0;
 
-		puts("new connection");
-		recv(client, buffer, sizeof buffer, 0);
+	client = accept(listener, NULL, NULL);
 
-		printf("Message received: %s\n", buffer);
+	puts("new connection");
+	recv(client, buffer, sizeof buffer, 0);
 
-		close(client);
-		close(listener);
-		exit(0);
-	}
+	printf("Message received: %s\n", buffer);
+
+	close(client);
+	close(listener);
 
 	return 0;
 }

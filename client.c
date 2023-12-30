@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <pthread.h>
 #include "net.h"
 #include "thread.h"
 #include "client.h"
@@ -28,7 +29,6 @@ void *client_init(struct target *target_host)
 	puts("Message sent.");
 
 	close(connector);
-
-	return 0;
+	pthread_exit(0);
 }
 

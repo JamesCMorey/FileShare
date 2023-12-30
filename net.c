@@ -29,12 +29,12 @@ int create_socket(struct addrinfo *p, int *sockfd, struct addrinfo **selected)
 		return -1;
 	}
 #endif
-
+/*
 	if (bind(*sockfd, p->ai_addr, p->ai_addrlen) == -1) {
 		perror("bind");
 		return -1;
 	}
-
+*/
 	return 0;
 }
 
@@ -54,7 +54,7 @@ int get_socket(int *sockfd, struct addrinfo *res, struct addrinfo **selected)
 
 int get_server_socket (char *port)
 {
-	struct addrinfo hints, *res, *p;
+	struct addrinfo hints, *res, *p, *selected;
 	int sockfd, rv = 0;
 
 	memset(&hints, 0, sizeof hints);
@@ -68,9 +68,13 @@ int get_server_socket (char *port)
 		exit(1);
 	}
 
-	get_socket(&sockfd, res, NULL);
-	freeaddrinfo(res);
+	get_socket(&sockfd, res, &selected);
+	if (bind(sockfd, selected->ai_addr, selected->ai_addrlen) == -1) {
+		perror("bind");
+		return -1;
+	}
 
+	freeaddrinfo(res);
 	return sockfd;
 }
 
